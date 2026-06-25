@@ -13,6 +13,6 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY mp3_to_text_web_app.py .
+COPY app.py index.html ./
 
-CMD ["python", "mp3_to_text_web_app.py"]
+CMD ["python", "app.py"]
