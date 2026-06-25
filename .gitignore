@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.exe
+*.zip
+build/
+dist/
+work/
+mp3_to_text_data/
+.env
+.venv/
+venv/
