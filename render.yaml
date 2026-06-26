@@ -3,12 +3,18 @@ services:
     name: mp3-to-text-arabic
     runtime: docker
     plan: starter
-    healthCheckPath: /
+    healthCheckPath: /healthz
+    disk:
+      name: mp3-to-text-data
+      mountPath: /data
+      sizeGB: 1
     envVars:
       - key: MP3_TO_TEXT_NO_BROWSER
         value: "1"
       - key: MP3_TO_TEXT_HOST
         value: "0.0.0.0"
+      - key: MP3_TO_TEXT_DATA_DIR
+        value: /data
       - key: WHISPER_LOCAL_FILES_ONLY
         value: "0"
       - key: WHISPER_DEVICE
