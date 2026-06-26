@@ -20,7 +20,7 @@ Install Python 3.10 or newer, then:
 
 ```powershell
 python -m pip install -r requirements.txt
-python mp3_to_text_web_app.py
+python app.py
 ```
 
 The application opens in the default browser. Faster-Whisper models are loaded from the local Hugging Face cache by default.
@@ -29,7 +29,7 @@ To allow the model to be downloaded automatically:
 
 ```powershell
 $env:WHISPER_LOCAL_FILES_ONLY="0"
-python mp3_to_text_web_app.py
+python app.py
 ```
 
 ## Deploy On Render
@@ -39,6 +39,7 @@ The repository includes:
 - `Dockerfile`
 - `render.yaml`
 - `requirements.txt`
+- `server.py`
 
 In Render:
 
@@ -48,7 +49,9 @@ In Render:
 4. Select at least the **Starter** plan.
 5. Deploy the service.
 
-Render supplies the `PORT` environment variable automatically. On the first transcription, Faster-Whisper downloads the selected model.
+Render supplies the `PORT` environment variable automatically. The `render.yaml` file also creates a persistent disk mounted at `/data`, and project records are saved there through `MP3_TO_TEXT_DATA_DIR=/data`.
+
+On the first transcription, Faster-Whisper downloads the selected model.
 
 ## Important Prototype Limitations
 
@@ -56,7 +59,7 @@ This repository is currently a single-server prototype:
 
 - It does not include user accounts.
 - All visitors share the same project library.
-- Project storage uses a local JSON file and may be lost when a cloud instance is replaced or redeployed.
+- Project storage uses one JSON file on the Render disk, not a full database.
 - Audio processing runs inside the web service and can be slow on CPU.
 - Large public workloads need object storage, PostgreSQL, a job queue, and a separate GPU worker.
 
